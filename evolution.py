@@ -1,21 +1,16 @@
 from Mutator import mutate
+from MachineLearning import mlScore
+import copy
 
-
-def evolve(images) :
-	return[]
-	evolvedImages = []
-
+def evolve(images):
+	returnVal = []
 	for image in images:
-		evolvedImages.append((image, mlScore(image)))
+		returnVal.append((image, mlScore(image)))
+	returnVal = [x[0] for x in sorted(returnVal, key = lambda x: x[1])]
+	survivors = returnVal[:len(returnVal)//2]
 
-	#sort it, get the first value
-	evolvedImages = sorted(evolvedImages, key=lambda x: x[1])
-	evolvedImages = [x[0] for x in evolvedImages[:len(evolvedImages)//2]]
+	mutated = [mutate(x) for x in survivors]
 
-	mutatedImages = []
+	newGen = survivors + mutated
 
-	for image in evolvedImages:
-		mutatedImages.append((image, mutate(image)))
-
-	images.extend(mutatedImages)
-	return images
+	return newGen

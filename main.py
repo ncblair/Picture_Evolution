@@ -1,8 +1,8 @@
 from evolution import evolve
 from generateImages import genRandom
 
-NUM_IMAGES = 1000;
-IMAGE_WIDTH = 100;
+NUM_IMAGES = 10;
+IMAGE_WIDTH = 10;
 def main():
 	images =  genRandom(NUM_IMAGES, IMAGE_WIDTH)
 	count = 0
@@ -10,4 +10,10 @@ def main():
 		images = evolve(images)
 		count = count + 1
 
-print(main())
+	print(len(images))
+	for n in range(len(images)):
+		print("hello")
+		images[n].save("images/result_image" + str(n) + ".png")
+	
+
+main()
