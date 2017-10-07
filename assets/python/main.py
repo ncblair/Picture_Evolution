@@ -11,7 +11,7 @@ def main():
 		count = count + 1
 
 	for n in range(len(images)):
-		images[n].save("images/result_image" + str(n) + ".png")
+		images[n].save("../images/result_image" + str(n) + ".png")
 	
 
 main()
