@@ -15,3 +15,5 @@ libraries:
   version: "latest"
 - name: numpy
   version: "latest"
+- name: Flask
+  version: "0.10"
