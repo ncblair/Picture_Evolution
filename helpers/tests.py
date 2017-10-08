@@ -2,7 +2,7 @@ from evolution import evolve
 from generateImages import genRandom
 from Mutator import mutate
 
-
+from PIL import _imaging
 from PIL import Image
 import unittest
 

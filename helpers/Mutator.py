@@ -1,3 +1,4 @@
+from PIL import _imaging
 from PIL import Image
 
 import numpy
