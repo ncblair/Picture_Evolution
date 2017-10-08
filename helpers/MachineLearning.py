@@ -1,5 +1,5 @@
 import random
-from PIL import _imaging
+
 from PIL import Image
 
 

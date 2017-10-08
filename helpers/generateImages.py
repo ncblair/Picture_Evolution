@@ -1,6 +1,6 @@
 
 import numpy
-from PIL import _imaging
+
 from PIL import Image
 
 #returns an array of randomly generated images
