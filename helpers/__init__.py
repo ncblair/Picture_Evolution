@@ -1,1 +1,1 @@
-__all__ = ["evolution", "gnerateImages", "MachineLearning", "engine", "Mutator"]
+__all__ = ["evolution", "generateImages", "MachineLearning", "engine", "Mutator"]

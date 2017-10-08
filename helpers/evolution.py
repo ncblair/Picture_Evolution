@@ -1,5 +1,6 @@
-from Mutator import mutate
-from MachineLearning import mlScore, grayScale
+from helpers.Mutator import mutate
+from helpers.MachineLearning import mlScore, grayScale
+
 import copy
 
 def evolve(images):

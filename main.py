@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request
 
+from helpers import *
+
 app = Flask(__name__)
 
-from helpers import *
+
 
 @app.route('/index')
 def index():
@@ -11,5 +13,5 @@ def index():
 @app.route('/newImg', methods=['POST'])
 def newImgReq():
     ###CALL MAIN.PY ON DEFAULT PARAMS###
-    imageReturned = main()
-    return render_template('newImg.html', image = imageReturned)
+    engine()
+    return render_template('newImg.html')
