@@ -8,6 +8,6 @@ handlers:
 - url: /.*
   script: main.app
   
-  libraries:
-  - name: PIL
-    version: latest
+libraries:
+- name: PIL
+  version: latest
