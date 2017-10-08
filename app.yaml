@@ -1,6 +1,4 @@
 runtime: python
-api_version: 1
-threadsafe: true
 env: flex
 entrypoint: gunicorn -b :$PORT main:app
 runtime_config:
@@ -11,7 +9,3 @@ handlers:
   static_dir: static
 - url: /.*
   script: main.app
-  
-libraries:
-- name: PIL
-  version: latest
