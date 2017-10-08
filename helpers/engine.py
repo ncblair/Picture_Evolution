@@ -4,6 +4,7 @@ from generateImages import genRandom
 NUM_IMAGES = 10
 IMAGE_WIDTH = 5
 def main():
+    return "http://nathanblair.me/assets/img/nathanCloseUp.JPG"
 	images =  genRandom(NUM_IMAGES, IMAGE_WIDTH)
 	count = 0
 	while count < 10000:
