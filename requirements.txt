@@ -1,2 +1,2 @@
-Flask==0.10
-numpy==1.12.1
+Flask==0.12.2
+numpy==1.13
