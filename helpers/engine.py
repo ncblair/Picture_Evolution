@@ -12,5 +12,5 @@ def main():
 
 	for n in range(len(images)):
 		images[n].save("../static/images/result_image" + str(n) + ".png")
-    return images[0]
-	
+	return images[0]
+main()
