@@ -8,8 +8,9 @@ import numpy as np
 
 from tensorflow.examples.tutorials.mnist import input_data
 
-NUM_IMAGES = 4
+NUM_IMAGES = 100
 IMAGE_WIDTH = 28
+NUMBER_TO_GENERATE = 0
 
 def main():
 	print("Loading Input Data")
@@ -18,7 +19,7 @@ def main():
 
 	print()
 	#Initialize Net Object
-	mnistNet = MNISTnet(in_data, 0)
+	mnistNet = MNISTnet(in_data, NUMBER_TO_GENERATE)
 
 	print("Preprocessing Image Data")
 	#Preprocess Image Data
@@ -32,7 +33,7 @@ def main():
 	#Run Evolutionariy Algorithm
 	images =  genRandom_black_and_white(NUM_IMAGES, IMAGE_WIDTH)
 	count = 0
-	while count < 10000:
+	while count < 1000:
 		images = evolve_black_and_white(images, mnistNet)
 		count = count + 1
 		if count % 10000 == 0:
@@ -44,7 +45,7 @@ def main():
 	for n in range(len(images)):
 		images[n] = images[n].resize((28, 28))
 		images[n] = Image.fromarray(morphology.opening(np.reshape(list(images[n].getdata()), (28, 28))).astype(np.uint8))
-		images[n].save("./images/result_image" + str(n) + ".png")
+		images[n].save("./images/picturing_a" + str(NUMBER_TO_GENERATE) + "_" + str(n) + ".png")
 	images[0].show()
 	#Close Neural Net
 	mnistNet.shut()
