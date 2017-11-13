@@ -1,5 +1,5 @@
-from Mutator import mutate
-from MachineLearning import mlScore, grayScale
+from mutator import mutate
+from score import mlScore, grayScale
 
 import copy
 
