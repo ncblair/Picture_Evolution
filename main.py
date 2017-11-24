@@ -2,7 +2,7 @@ from evolution import evolve_grayscale, evolve_black_and_white
 from generateImages import genRandom_grayscale, genRandom_black_and_white
 from Net import MNISTnet
 from PIL import Image, ImageFilter
-from skimage import morphology
+from scipy.ndimage import morphology
 import numpy as np
 
 
@@ -10,7 +10,7 @@ from tensorflow.examples.tutorials.mnist import input_data
 
 NUM_IMAGES = 25
 IMAGE_WIDTH = 28
-NUMBER_TO_GENERATE = 3
+NUMBER_TO_GENERATE = 1
 
 def main():
 	print("Loading Input Data")
@@ -39,12 +39,13 @@ def main():
 		if count % 10000 == 0:
 			images[0].show()
 
+	images[0].show()
 
 	print("Resizing, Denoising, and Saving Images to File")
 	#Resize, Denoise and Save Images to File
 	for n in range(len(images)):
 		images[n] = images[n].resize((28, 28))
-		images[n] = Image.fromarray(morphology.opening(np.reshape(list(images[n].getdata()), (28, 28))).astype(np.uint8))
+		images[n] = Image.fromarray(morphology.grey_opening(np.reshape(list(images[n].getdata()), (28, 28))).astype(np.uint8))
 		images[n].save("./images/picturing_a_" + str(NUMBER_TO_GENERATE) + "_res" + str(n) + ".png")
 	images[0].show()
 	#Close Neural Net
