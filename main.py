@@ -8,9 +8,9 @@ import numpy as np
 
 from tensorflow.examples.tutorials.mnist import input_data
 
-NUM_IMAGES = 25
+NUM_IMAGES = 4
 IMAGE_WIDTH = 28
-NUMBER_TO_GENERATE = 3
+NUMBER_TO_GENERATE = 0
 
 def main():
 	print("Loading Input Data")
@@ -33,7 +33,7 @@ def main():
 	#Run Evolutionariy Algorithm
 	images =  genRandom_black_and_white(NUM_IMAGES, IMAGE_WIDTH)
 	count = 0
-	while count < 2000:
+	while count < 10000:
 		images = evolve_black_and_white(images, mnistNet)
 		count = count + 1
 		if count % 10000 == 0:
