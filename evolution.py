@@ -1,4 +1,4 @@
-from mutator import mutate_grayscale, mutate_black_and_white
+from Mutator import mutate_grayscale, mutate_black_and_white
 from score import mlScore, grayScale
 
 import copy
