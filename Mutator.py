@@ -64,10 +64,10 @@ def breshenham(arr):
 	dy = y1 - y0
 	err = np.absolute(dy/dx)
 	realErr = 0.0
-    y = y0
-    for x in range(x0, x1 + 1):
-    	arr[x][y] = 1
-    	while error > 0.5:
-    		y = y + np.sign(deltay)
-    		error -= 1
+	y = y0
+	for x in range(x0, x1 + 1):
+		arr[x][y] = 1
+		while error > 0.5:
+			y = y + np.sign(deltay)
+			error -= 1
 
