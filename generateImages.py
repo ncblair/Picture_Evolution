@@ -24,6 +24,13 @@ def genWhite(numImages, width):
 		images.append(Image.fromarray(imarray.astype('uint8'), 'L'))
 	return images
 
+def genBlack(numImages, width):
+	images = []
+	for n in range(numImages):
+		imarray = np.full(fill_value=0,shape=((width,width)))
+		images.append(Image.fromarray(imarray.astype('uint8'), 'L'))
+	return images
+
 
 def genRandom_black_and_white(numImages, width):
 	images = []

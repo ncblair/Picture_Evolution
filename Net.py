@@ -3,6 +3,9 @@ from tensorflow.examples.tutorials.mnist import input_data
 import numpy as np
 from PIL import Image
 import _pickle
+from scipy import ndimage
+from skimage import feature
+from skimage.morphology import skeletonize
 
 class MNISTnet:
 	def __init__(self, input_data=None, number=2):
@@ -66,13 +69,28 @@ class MNISTnet:
 
 	def prepro_edge_detector(self):
 		print("  -  Detecting Edges")
+		for n in range(len(self.data.train.images)):
+			im = np.reshape(self.data.train.images[n], (28, 28))
+			self.data.train.images[n] = np.ndarray.flatten(feature.canny(im))
+		#imarray = np.reshape(self.data.train.images[0],(28, 28)) * 255
+		#Image.fromarray(imarray.astype('uint8'), 'L').show()
+
 
 
 	def prepro_round(self):
 		print("  -  Maximizing Contrast")
 		for n in range(len(self.data.train.images)):
 			self.data.train.images[n] = np.round(self.data.train.images[n])
+		#imarray = np.reshape(self.data.train.images[0],(28, 28)) * 255
+		#Image.fromarray(imarray.astype('uint8'), 'L').show()
 
+	def prepro_skeletonize(self):
+		print("  -  Skeletonizing")
+		for n in range(len(self.data.train.images)):
+			im = np.reshape(self.data.train.images[n], (28, 28))
+			self.data.train.images[n] = np.ndarray.flatten(skeletonize(im))
+		#imarray = np.reshape(self.data.train.images[0],(28, 28)) * 255
+		#Image.fromarray(imarray.astype('uint8'), 'L').show()
 
 
 	def score(self, image):
