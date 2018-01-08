@@ -4,8 +4,12 @@ from MNIST_main import *
 def main():
 	#prompt user for parameters
 	print("This program generates images using an evolutionairy algorithm.")
+	
 	num_images = int(input("How many images per generation would you like? (please select a positive integer)\n"))
-	print("generating %i images per generation", num_images)
+	print("using %i images per generation", num_images)
+	
+	evolution_iters = int(input("How many generations would you like? (please select a positive integer)\n"))
+	print("evolving over %i generations", evolution_iters)
 
 	selection = -1
 	while selection == -1:
@@ -26,7 +30,7 @@ def main():
 					else:
 						number_to_generate = -1
 						print("Please select a number from 0-9")
-			MNIST_run(num_images, number_to_generate, retrain)
+			MNIST_run(num_images, number_to_generate, retrain, evolution_iters)
 
 		else:
 			selection = -1
