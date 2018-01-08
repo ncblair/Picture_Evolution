@@ -37,7 +37,6 @@ def main():
 
 	print("Running Evolutionary Algorithm")
 	#Run Evolutionariy Algorithm
-	#images =  genRandom_black_and_white(NUM_IMAGES, IMAGE_WIDTH)
 	images = genRandom_black_and_white(NUM_IMAGES, IMAGE_WIDTH)
 	count = 0
 	while count < 5000:
