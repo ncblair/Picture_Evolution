@@ -11,7 +11,7 @@ from tensorflow.examples.tutorials.mnist import input_data
 
 IMAGE_WIDTH = 28
 
-def MNIST_run(num_images=4, number_to_generate=2, retrain=0, evolution_iters=5000):
+def mnist_run(num_images=4, number_to_generate=2, retrain=0, evolution_iters=5000):
 	if retrain == "Y":
 		print("Loading Input Data")
 		# #Load Input

@@ -1,4 +1,4 @@
-from MNIST_main import *
+from mnist_main import *
 
 
 def main():
@@ -30,7 +30,7 @@ def main():
 					else:
 						number_to_generate = -1
 						print("Please select a number from 0-9")
-			MNIST_run(num_images, number_to_generate, retrain, evolution_iters)
+			mnist_run(num_images, number_to_generate, retrain, evolution_iters)
 
 		else:
 			selection = -1
