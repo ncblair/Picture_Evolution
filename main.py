@@ -1,66 +1,38 @@
-from evolution import *
-from generateImages import *
-from Net import MNISTnet
-from PIL import Image, ImageFilter
-from scipy.ndimage import morphology
-import numpy as np
-from skimage.morphology import skeletonize
+from MNIST_main import *
 
-# Uncomment if training again
-from tensorflow.examples.tutorials.mnist import input_data
-
-NUM_IMAGES = 4
-IMAGE_WIDTH = 28
-NUMBER_TO_GENERATE = 2
 
 def main():
-	# print("Loading Input Data")
-	# #Load Input  
-	in_data = input_data.read_data_sets('MNIST_data', one_hot=True)
+	#prompt user for parameters
+	print("This program generates images using an evolutionairy algorithm.")
+	num_images = int(input("How many images per generation would you like? (please select a positive integer)\n"))
+	print("generating %i images per generation", num_images)
 
-	print("Initializing Net")
-	#Initialize Net Object
-	mnistNet = MNISTnet(number=NUMBER_TO_GENERATE, input_data=in_data)
-	#mnistNet = MNISTnet(number=NUMBER_TO_GENERATE)
+	selection = -1
+	while selection == -1:
+		selection = int(input("Select an option: \n(0) generate an MNIST number\n"))
+		
+		if selection == 0:
+			print("You have selected to generate an MNIST number")
+			number_to_generate = -1
+			retrain = input("Would you like to Retrain [Y/n]\n")
+			if retrain != "Y" and retrain != "n":
+				retrain = "Y" 
+				print("By default, the program will retrain")
+			if retrain == "Y":
+				while number_to_generate == -1:
+					number_to_generate = int(input("What number would you like to generate from 0-9?\n"))
+					if number_to_generate in range(10):
+						print("Generating an image of the number %i", number_to_generate)
+					else:
+						number_to_generate = -1
+						print("Please select a number from 0-9")
+			MNIST_run(num_images, number_to_generate, retrain)
 
-	# print("Preprocessing Image Data")
-	#Preprocess Image Data
-	mnistNet.prepro_round()
-	#mnistNet.prepro_edge_detector()
-	#mnistNet.prepro_skeletonize()
-
-	# print("Training Neural Net")
-	#print("Loading Neural Net")
-	#Train Net
-	#mnistNet.load_net()
-	mnistNet.train()
-
-	print("Running Evolutionary Algorithm")
-	#Run Evolutionariy Algorithm
-	images = genRandom_black_and_white(NUM_IMAGES, IMAGE_WIDTH)
-	count = 0
-	while count < 5000:
-		images = evolve_black_and_white(images, mnistNet)
-		count = count + 1
-		if count % 5000 == 0:
-			images[0].show()
+		else:
+			selection = -1
+			print("Please select a valid option from the list of numbers")
 
 
-	images[0].show()
-	print(np.asarray(images[0]))
-	print("Resizing, Denoising, and Saving Images to File")
-	#Resize, Denoise and Save Images to File
-	for n in range(len(images)):
-		images[n] = images[n].resize((28, 28))
-		imarray = np.asarray(images[n])
-		imarray = morphology.binary_opening(np.asarray(images[n]), structure=np.ones((3,3)))
-		imarray = 255 * skeletonize(imarray)
-		print(imarray)
-		images[n] = Image.fromarray(imarray.astype('uint8'), 'L')
-		images[n].save("./images/picturing_a_" + str(NUMBER_TO_GENERATE) + "_res" + str(n) + ".png")
-	images[0].show()
-	#Close Neural Net
-	mnistNet.shut()
 
 
 
@@ -68,7 +40,6 @@ def main():
 
 
 if __name__ == "__main__":
-    import timeit
     setup = "from __main__ import main"
     print("Running Main")
-    print(timeit.timeit("main()", setup=setup, number = 1))
+    main()
