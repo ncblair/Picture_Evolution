@@ -26,7 +26,6 @@ class MNISTnet:
 
 		a2 = tf.sigmoid(tf.matmul(self.x, self.W1) + self.b1)
 		self.y_hat = tf.sigmoid(tf.matmul(a2, self.W2) + self.b2)
-		
 
 		self.sess.run(tf.global_variables_initializer())
 
