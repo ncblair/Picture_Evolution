@@ -28,7 +28,7 @@ class MNISTnet:
 		self.sess.run(tf.global_variables_initializer())
 
 	def train(self):
-		cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=self.y_hat, labels=self.y))
+		cost = tf.reduce_mean((self.y_hat - self.y)**2)
 		train_step = tf.train.GradientDescentOptimizer(0.05).minimize(cost)
 		correct_prediction = tf.equal(self.y > .5, self.y_hat > .5)
 		accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
