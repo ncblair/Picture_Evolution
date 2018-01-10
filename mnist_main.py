@@ -1,10 +1,10 @@
-# from evolution import *
-# from generateImages import *
-# from Net import MNISTnet
-# from PIL import Image, ImageFilter
-# from scipy.ndimage import morphology
-# import numpy as np
-# from skimage.morphology import skeletonize
+from evolution import *
+from generateImages import *
+from Net import MNISTnet
+from PIL import Image, ImageFilter
+from scipy.ndimage import morphology
+import numpy as np
+from skimage.morphology import skeletonize
 
 # Uncomment if training again
 from tensorflow.examples.tutorials.mnist import input_data

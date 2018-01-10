@@ -1,4 +1,4 @@
-# from mnist_main import *
+from mnist_main import *
 
 
 def main():
