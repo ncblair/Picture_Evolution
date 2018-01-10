@@ -1,14 +1,14 @@
-from mnist_main import *
+# from mnist_main import *
 
 
 def main():
 	#prompt user for parameters
 	print("This program generates images using an evolutionairy algorithm.")
 	
-	num_images = int(input("How many images per generation would you like? (please select an even positive integer ~2 to 100)\n"))
+	num_images = int(input("How many images per generation would you like? (please select a positive integer)\n"))
 	print("using %i images per generation", num_images)
 	
-	evolution_iters = int(input("How many generations would you like? (please select a positive integer ~10^2 to 10^5)\n"))
+	evolution_iters = int(input("How many generations would you like? (please select a positive integer)\n"))
 	print("evolving over %i generations", evolution_iters)
 
 	selection = -1

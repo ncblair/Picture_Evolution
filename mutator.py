@@ -15,7 +15,7 @@ def mutate_grayscale(image):
 		for j in range(image.size[1]):
 			if random.random() > .95:
 				a = random.random() * 255
-
+				
 				newImageMap[i, j] = int(a)
 			else:
 				newImageMap[i, j] = pixelMap[i, j]

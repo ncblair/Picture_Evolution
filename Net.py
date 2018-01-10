@@ -1,11 +1,10 @@
-import tensorflow as tf
-from tensorflow.examples.tutorials.mnist import input_data
-import numpy as np
-from PIL import Image
-import _pickle
-from scipy import ndimage
-from skimage import feature
-from skimage.morphology import skeletonize
+# from skimage import feature
+# from skimage.morphology import skeletonize
+# import tensorflow as tf
+# import numpy as np
+# from PIL import Image
+# import _pickle
+# from scipy import ndimage
 
 class MNISTnet:
 	def __init__(self, input_data=None, number=2):
@@ -14,8 +13,6 @@ class MNISTnet:
 
 		# Begin session
 		self.sess = tf.InteractiveSession()
-
-		
 
 		self.x = tf.placeholder(tf.float32, shape=[None, 784])
 		self.y = tf.placeholder(tf.float32, shape=[None, 1])
@@ -29,25 +26,27 @@ class MNISTnet:
 
 		self.sess.run(tf.global_variables_initializer())
 
-	
-
 	def train(self):
-
 		cost = tf.reduce_mean((self.y - self.y_hat)**2)
-		train_step = tf.train.GradientDescentOptimizer(0.1).minimize(cost)
+		train_step = tf.train.GradientDescentOptimizer(0.05).minimize(cost)
+		correct_prediction = tf.equal(tf.argmax(self.y, 1), tf.argmax(self.y_hat, 1))
+		accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 
 		tf.global_variables_initializer().run()
 
 		# Perform training
-		for i in range(2000):
+		for i in range(3000):
 			batch_xs, batch_ys = self.data.train.next_batch(100)
 			changed_ys = batch_ys[:, [self.num]]
 
 			self.sess.run(train_step, feed_dict={self.x: batch_xs, self.y: changed_ys})
 
-			#if i % 100 == 0:
-			#	print(self.y.eval(feed_dict={self.x:batch_xs}))
+			# if i % 100 == 0:
+			# 	print(self.y.eval(feed_dict={self.x:batch_xs}))
+
+
+		print("Accuracy on Test Set:", self.sess.run([accuracy], feed_dict={self.x: self.data.test.images, self.y_hat: self.data.test.labels[:, [self.num]]}))
 
 		dict_rep = {"W1": self.W1.eval(), "b1": self.b1.eval(), "W2": self.W2.eval(), "b2": self.b2.eval()}
 		output = open('trainedMNIST.pkl', 'wb')
