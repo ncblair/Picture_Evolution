@@ -16,10 +16,11 @@ class MNISTnet:
 
 		self.x = tf.placeholder(tf.float32, shape=[None, 784])
 		self.y = tf.placeholder(tf.float32, shape=[None, 1])
-		self.W1 = tf.Variable(tf.zeros([784, 50]))
-		self.b1 = tf.Variable(tf.zeros([50]))
-		self.W2 = tf.Variable(tf.zeros([50, 1]))
-		self.b2 = tf.Variable(tf.zeros([1]))
+
+		self.W1 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[784, 50]))
+		self.b1 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[50]))
+		self.W2 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[50, 1]))
+		self.b2 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[1]))
 
 		a2 = tf.sigmoid(tf.matmul(self.x, self.W1) + self.b1)
 		self.y_hat = tf.sigmoid(tf.matmul(a2, self.W2) + self.b2)
@@ -45,7 +46,8 @@ class MNISTnet:
 			# 	print(self.y.eval(feed_dict={self.x:batch_xs}))
 
 
-		print("Accuracy on Test Set:", self.sess.run([accuracy], feed_dict={self.x: self.data.test.images, self.y: self.data.test.labels[:, [self.num]]}))
+		print("Accuracy on Test Set:", self.sess.run(accuracy, feed_dict={self.x: self.data.test.images, self.y: self.data.test.labels[:, [self.num]]}))
+
 
 		dict_rep = {"W1": self.W1.eval(), "b1": self.b1.eval(), "W2": self.W2.eval(), "b2": self.b2.eval()}
 		output = open('trainedMNIST.pkl', 'wb')

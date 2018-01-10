@@ -1,5 +1,5 @@
 from mutator import *
-from score import mlScore, grayScale
+from score import *
 
 import copy
 

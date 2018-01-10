@@ -19,7 +19,7 @@ def mnist_run(num_images=4, number_to_generate=2, retrain=0, evolution_iters=500
 		
 		print("Initializing Net")
 		#Initialize Net Object
-		mnistNet = MNISTnet(number=number_to_generate, input_data=in_data)
+		mnistNet = MNISTnet(input_data=in_data, number=number_to_generate)
 
 
 		print("Preprocessing Image Data")
