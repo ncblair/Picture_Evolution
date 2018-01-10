@@ -1,6 +1,6 @@
-# from evolution import evolve
-# from generateImages import genRandom
-# from mutator import mutate
+from evolution import evolve
+from generateImages import genRandom
+from mutator import mutate
 
 
 from PIL import Image

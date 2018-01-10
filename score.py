@@ -1,7 +1,7 @@
-# import random
-# from PIL import Image
-# import Net
-# import numpy as np
+import random
+from PIL import Image
+import Net
+import numpy as np
 
 
 def mlScore(image, net):
