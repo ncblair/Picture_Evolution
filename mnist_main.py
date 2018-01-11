@@ -1,6 +1,7 @@
 from evolution import *
 from generateImages import *
 from Net import MNISTnet
+from Display import *
 from PIL import Image, ImageFilter
 from scipy.ndimage import morphology
 import numpy as np
@@ -42,30 +43,39 @@ def mnist_run(num_images=4, number_to_generate=2, retrain=0, evolution_iters=500
 		mnistNet.load_net()
 	
 
-	print("Running Evolutionary Algorithm")
-	#Run Evolutionariy Algorithm
 	images = genRandom_black_and_white(num_images, IMAGE_WIDTH)
-	count = 0
-	while count < evolution_iters:
-		images = evolve_black_and_white(images, mnistNet)
-		count = count + 1
-		if count % evolution_iters == 0:
-			images[0].show()
+	x = 0
+	while x < 10:
+		print("Running Evolutionary Algorithm")
+		#Run Evolutionariy Algorithm
+
+		count = 0
+		while count < evolution_iters:
+			images = evolve_black_and_white(images, mnistNet)
+			count = count + 1
+			if count % evolution_iters == 0:
+				images[0].show()
 
 
+		
+		#print(np.asarray(images[0]))
+		print("Resizing, Denoising, and Saving Images to File")
+		#Resize, Denoise and Save Images to File
+		for n in range(len(images)):
+			imarray = np.asarray(images[n])
+			imarray = morphology.binary_opening(np.asarray(images[n]), structure=np.ones((2,2)))
+			if x == 9:
+				imarray = skeletonize(imarray)
+			imarray = imarray * 255
+			#print(imarray)
+			images[n] = Image.fromarray(imarray.astype('uint8'), 'L')
+			images[n].save("./images/picturing_a_" + str(number_to_generate) + "_res" + str(n) + ".png")
+
+		images[0].show()
+	
+		x += 1
 	images[0].show()
-	#print(np.asarray(images[0]))
-	print("Resizing, Denoising, and Saving Images to File")
-	#Resize, Denoise and Save Images to File
-	for n in range(len(images)):
-		images[n] = images[n].resize((28, 28))
-		imarray = np.asarray(images[n])
-		imarray = morphology.binary_opening(np.asarray(images[n]), structure=np.ones((3,3)))
-		imarray = 255 * skeletonize(imarray)
-		#print(imarray)
-		images[n] = Image.fromarray(imarray.astype('uint8'), 'L')
-		images[n].save("./images/picturing_a_" + str(number_to_generate) + "_res" + str(n) + ".png")
-	images[0].show()
+	
 	#Close Neural Net
 	mnistNet.shut()
 

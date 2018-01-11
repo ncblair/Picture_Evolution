@@ -1,5 +1,6 @@
 from skimage import feature
 from skimage.morphology import skeletonize
+from generateImages import *
 import tensorflow as tf
 import numpy as np
 from PIL import Image
@@ -14,13 +15,28 @@ class MNISTnet:
 		# Begin session
 		self.sess = tf.InteractiveSession()
 
+		#x is the image
 		self.x = tf.placeholder(tf.float32, shape=[None, 784])
+		#y is the label
 		self.y = tf.placeholder(tf.float32, shape=[None, 1])
 
-		self.W1 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[784, 50]))
-		self.b1 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[50]))
-		self.W2 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[50, 1]))
-		self.b2 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[1]))
+		#self.W1 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[784, 50]))
+		# self.b1 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[50]))
+		#self.W2 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[50, 1]))
+		# self.b2 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[1]))
+
+		self.W1 = tf.Variable(tf.zeros(shape=[784, 50]))
+		self.b1 = tf.Variable(tf.zeros(shape=[50]))
+		self.W2 = tf.Variable(tf.zeros(shape=[50, 1]))
+		self.b2 = tf.Variable(tf.zeros(shape=[1]))
+
+
+		#self.W1 = tf.Variable(tf.random_normal(stddev = .25, shape=[784, 50]))
+		#self.b1 = tf.Variable(tf.zeros(shape=[50]))
+		#self.W2 = tf.Variable(tf.random_normal(stddev=.25, shape=[50, 1]))
+		#self.b2 = tf.Variable(tf.zeros(shape=[1]))
+
+
 
 		a2 = tf.sigmoid(tf.matmul(self.x, self.W1) + self.b1)
 		self.y_hat = tf.sigmoid(tf.matmul(a2, self.W2) + self.b2)
@@ -40,6 +56,13 @@ class MNISTnet:
 			batch_xs, batch_ys = self.data.train.next_batch(100)
 			changed_ys = batch_ys[:, [self.num]]
 
+			#add some noise so the program knows noise is bad
+			#randomGrayscales = np.random.randint(0, 256, size=(50, 784), dtype='u1')
+			#changed_xs = np.vstack((batch_xs, randomGrayscales))
+			#changed_ys = np.vstack((changed_ys, np.zeros((50, 1))))
+
+			#print(changed_xs)
+			#print(changed_ys)
 			self.sess.run(train_step, feed_dict={self.x: batch_xs, self.y: changed_ys})
 
 			# if i % 100 == 0:
@@ -71,8 +94,8 @@ class MNISTnet:
 		for n in range(len(self.data.train.images)):
 			im = np.reshape(self.data.train.images[n], (28, 28))
 			self.data.train.images[n] = np.ndarray.flatten(feature.canny(im))
-		#imarray = np.reshape(self.data.train.images[0],(28, 28)) * 255
-		#Image.fromarray(imarray.astype('uint8'), 'L').show()
+		imarray = np.reshape(self.data.train.images[0],(28, 28)) * 255
+		Image.fromarray(imarray.astype('uint8'), 'L').show()
 
 
 
@@ -80,21 +103,21 @@ class MNISTnet:
 		print("  -  Maximizing Contrast")
 		for n in range(len(self.data.train.images)):
 			self.data.train.images[n] = np.round(self.data.train.images[n])
-		#imarray = np.reshape(self.data.train.images[0],(28, 28)) * 255
-		#Image.fromarray(imarray.astype('uint8'), 'L').show()
+		imarray = np.reshape(self.data.train.images[0],(28, 28)) * 255
+		Image.fromarray(imarray.astype('uint8'), 'L').show()
 
 	def prepro_skeletonize(self):
 		print("  -  Skeletonizing")
 		for n in range(len(self.data.train.images)):
 			im = np.reshape(self.data.train.images[n], (28, 28))
 			self.data.train.images[n] = np.ndarray.flatten(skeletonize(im))
-		#imarray = np.reshape(self.data.train.images[0],(28, 28)) * 255
-		#Image.fromarray(imarray.astype('uint8'), 'L').show()
+		imarray = np.reshape(self.data.train.images[0],(28, 28)) * 255
+		Image.fromarray(imarray.astype('uint8'), 'L').show()
 
 
 	def score(self, image):
 		val = self.y_hat.eval(feed_dict={self.x: image})
-		#print(val)
+		print(val)
 		return val
 
 	def shut(self):
