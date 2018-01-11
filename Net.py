@@ -28,11 +28,10 @@ class MNISTnet:
 		self.sess.run(tf.global_variables_initializer())
 
 	def train(self):
-		cost = tf.reduce_mean((self.y - self.y_hat)**2)
+		cost = tf.reduce_mean((self.y_hat - self.y)**2)
 		train_step = tf.train.GradientDescentOptimizer(0.05).minimize(cost)
 		correct_prediction = tf.equal(self.y > .5, self.y_hat > .5)
 		accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
 
 		tf.global_variables_initializer().run()
 
@@ -47,8 +46,8 @@ class MNISTnet:
 			# 	print(self.y.eval(feed_dict={self.x:batch_xs}))
 
 
-	
 		print("Accuracy on Test Set:", self.sess.run(accuracy, feed_dict={self.x: self.data.test.images, self.y: self.data.test.labels[:, [self.num]]}))
+
 
 		dict_rep = {"W1": self.W1.eval(), "b1": self.b1.eval(), "W2": self.W2.eval(), "b2": self.b2.eval()}
 		output = open('trainedMNIST.pkl', 'wb')
