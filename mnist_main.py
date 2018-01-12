@@ -61,9 +61,9 @@ def mnist_run(num_images=4, number_to_generate=2, retrain=0, evolution_iters=500
 
 	for n in range(len(images)):
 		imarray = np.asarray(images[n])
-		#imarray = morphology.binary_opening(np.asarray(images[n]), structure=np.ones((2,2)))
-		#imarray = skeletonize(imarray)
-		#imarray = imarray * 255
+		imarray = morphology.binary_opening(np.asarray(images[n]), structure=np.ones((2,2)))
+		imarray = skeletonize(imarray)
+		imarray = imarray * 255
 		images[n] = Image.fromarray(imarray.astype('uint8'), 'L')
 		images[n].save("./images/picturing_a_" + str(number_to_generate) + "_res" + str(n) + ".png")
 	images[0].show()
