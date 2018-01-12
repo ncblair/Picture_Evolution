@@ -1,6 +1,7 @@
 from evolution import *
 from generateImages import *
 from Net import MNISTnet
+from score import *
 from Display import *
 from PIL import Image, ImageFilter
 from scipy.ndimage import morphology
@@ -43,34 +44,29 @@ def mnist_run(num_images=4, number_to_generate=2, retrain=0, evolution_iters=500
 		mnistNet.load_net()
 	
 
-	images = genBlack(num_images, IMAGE_WIDTH)
+	images = genRandom_black_and_white(num_images, IMAGE_WIDTH)
 	x = 1
 	print("Running Evolutionary Algorithm")
 	#Run Evolutionariy Algorithm
 	while x < 11:
-
 		count = 0
 		while count < evolution_iters / 10:
-			images = evolve_black_and_white_strokes(images, mnistNet)
+			images = evolve_black_and_white(images, mnistNet)
 			count = count + 1
-
-
-		print(str(x*10) + "% ______________________")
-		#Resize, Denoise and Save Images to File
-		for n in range(len(images)):
-			imarray = np.asarray(images[n])
-			imarray = morphology.binary_opening(np.asarray(images[n]), structure=np.ones((3,3)))
-			if x == 9:
-				imarray = skeletonize(imarray)
-			imarray = imarray * 255
-			#print(imarray)
-			images[n] = Image.fromarray(imarray.astype('uint8'), 'L')
-			images[n].save("./images/picturing_a_" + str(number_to_generate) + "_res" + str(n) + ".png")
-		if x == 9:
-			images[0].show()
+		print(str(x*10) + "percent complete\nconfidence:" + str(mlScore(images[0], mnistNet)))
 		x += 1
+
+	#Resize, Denoise and Save Images to File	
+	#images[0].show()
+
+	for n in range(len(images)):
+		imarray = np.asarray(images[n])
+		#imarray = morphology.binary_opening(np.asarray(images[n]), structure=np.ones((2,2)))
+		#imarray = skeletonize(imarray)
+		#imarray = imarray * 255
+		images[n] = Image.fromarray(imarray.astype('uint8'), 'L')
+		images[n].save("./images/picturing_a_" + str(number_to_generate) + "_res" + str(n) + ".png")
 	images[0].show()
-	
 	#Close Neural Net
 	mnistNet.shut()
 

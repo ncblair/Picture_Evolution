@@ -20,21 +20,21 @@ class MNISTnet:
 		#y is the label
 		self.y = tf.placeholder(tf.float32, shape=[None, 1])
 
-		#self.W1 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[784, 50]))
+		self.W1 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[784, 50]))
 		# self.b1 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[50]))
-		#self.W2 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[50, 1]))
+		self.W2 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[50, 1]))
 		# self.b2 = tf.Variable(tf.random_uniform(minval=-.1,maxval=.1, shape=[1]))
 
-		self.W1 = tf.Variable(tf.zeros(shape=[784, 50]))
-		self.b1 = tf.Variable(tf.zeros(shape=[50]))
-		self.W2 = tf.Variable(tf.zeros(shape=[50, 1]))
-		self.b2 = tf.Variable(tf.zeros(shape=[1]))
+		# self.W1 = tf.Variable(tf.zeros(shape=[784, 50]))
+		# self.b1 = tf.Variable(tf.zeros(shape=[50]))
+		# self.W2 = tf.Variable(tf.zeros(shape=[50, 1]))
+		# self.b2 = tf.Variable(tf.zeros(shape=[1]))
 
 
 		#self.W1 = tf.Variable(tf.random_normal(stddev = .25, shape=[784, 50]))
-		#self.b1 = tf.Variable(tf.zeros(shape=[50]))
+		self.b1 = tf.Variable(tf.zeros(shape=[50]))
 		#self.W2 = tf.Variable(tf.random_normal(stddev=.25, shape=[50, 1]))
-		#self.b2 = tf.Variable(tf.zeros(shape=[1]))
+		self.b2 = tf.Variable(tf.zeros(shape=[1]))
 
 
 
@@ -57,9 +57,11 @@ class MNISTnet:
 			changed_ys = batch_ys[:, [self.num]]
 
 			#add some noise so the program knows noise is bad
-			randomGrayscales = np.random.randint(0, 256, size=(100, 784), dtype='u1')
+			randomGrayscales = np.random.randint(0, 256, size=(25, 784), dtype='u1')
+			whites = np.ones(shape=(25, 784), dtype='u1') * 255
 			batch_xs = np.vstack((batch_xs, randomGrayscales))
-			changed_ys = np.vstack((changed_ys, np.zeros((100, 1))))
+			batch_xs = np.vstack((batch_xs, whites))
+			changed_ys = np.vstack((changed_ys,  np.zeros((50, 1))))
 
 			#print(changed_xs)
 			#print(changed_ys)

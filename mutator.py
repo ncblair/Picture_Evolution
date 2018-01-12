@@ -24,9 +24,9 @@ def mutate_grayscale(image):
 
 def mutate_black_and_white(image):
 	imarray = np.asarray(image)
-	mask = np.reshape(np.random.choice([0, 255], size=imarray.size, p=[.975, .025]), imarray.shape)
+	mask = np.reshape(np.random.choice([0, 255], size=imarray.size, p=[.99, .01]), imarray.shape)
 	new_imarray = np.bitwise_or(mask, imarray)
-	mask = np.reshape(np.random.choice([0, 255], size=imarray.size, p=[.025, .975]), imarray.shape)
+	mask = np.reshape(np.random.choice([0, 255], size=imarray.size, p=[.01, .99]), imarray.shape)
 	np.bitwise_and(mask, new_imarray, new_imarray)
 	return Image.fromarray(new_imarray.astype('uint8'), 'L')
 
