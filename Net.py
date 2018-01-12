@@ -57,9 +57,9 @@ class MNISTnet:
 			changed_ys = batch_ys[:, [self.num]]
 
 			#add some noise so the program knows noise is bad
-			#randomGrayscales = np.random.randint(0, 256, size=(50, 784), dtype='u1')
-			#changed_xs = np.vstack((batch_xs, randomGrayscales))
-			#changed_ys = np.vstack((changed_ys, np.zeros((50, 1))))
+			randomGrayscales = np.random.randint(0, 256, size=(100, 784), dtype='u1')
+			batch_xs = np.vstack((batch_xs, randomGrayscales))
+			changed_ys = np.vstack((changed_ys, np.zeros((100, 1))))
 
 			#print(changed_xs)
 			#print(changed_ys)
@@ -104,7 +104,7 @@ class MNISTnet:
 		for n in range(len(self.data.train.images)):
 			self.data.train.images[n] = np.round(self.data.train.images[n])
 		imarray = np.reshape(self.data.train.images[0],(28, 28)) * 255
-		Image.fromarray(imarray.astype('uint8'), 'L').show()
+		#Image.fromarray(imarray.astype('uint8'), 'L').show()
 
 	def prepro_skeletonize(self):
 		print("  -  Skeletonizing")
@@ -117,7 +117,7 @@ class MNISTnet:
 
 	def score(self, image):
 		val = self.y_hat.eval(feed_dict={self.x: image})
-		print(val)
+		#print(val)
 		return val
 
 	def shut(self):
